@@ -1,0 +1,19 @@
+{
+    "littlebits": {
+        "awscloudformation": {
+            "AuthRoleName": "littlebits1-20190331131933-authRole",
+            "UnauthRoleArn": "arn:aws:iam::639951249535:role/littlebits1-20190331131933-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::639951249535:role/littlebits1-20190331131933-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "littlebits1-20190331131933-deployment",
+            "UnauthRoleName": "littlebits1-20190331131933-unauthRole",
+            "StackName": "littlebits1-20190331131933",
+            "StackId": "arn:aws:cloudformation:us-east-1:639951249535:stack/littlebits1-20190331131933/8902cd40-53e1-11e9-b46a-0a780bcb48a6"
+        },
+        "categories": {
+            "auth": {
+                "cognitob7d26732": {}
+            }
+        }
+    }
+}

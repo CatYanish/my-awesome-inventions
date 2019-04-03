@@ -1,0 +1,11 @@
+type Invention @model @auth(rules: [{allow: owner}]) {
+  id: ID!
+  title: String!
+  description: String!
+  bitsUsed: [ String!]!
+  userName: String
+  email: String
+  otherMaterials: [String]
+}
+
+
