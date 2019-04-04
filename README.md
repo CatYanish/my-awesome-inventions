@@ -44,7 +44,9 @@ Then
 `
 $ amplify init
 Note: It is recommended to run this command from the root of your app directory
-? do you want to use an existing env? No
+? do you want to use an existing env? No (create and name the env)
+? do you want to use an AWS Profile? Yes
+? Choose profile you want to use: amplify-admin (Choose the profile that matches the one you just created) 
 ? Choose your default editor: Visual Studio Code
 ? Choose the type of app that you're building javascript
 Please tell us about your project
@@ -61,6 +63,21 @@ https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
 ⠦ Initializing project in the cloud...
 ```
 
+
+
+then 
+
+
+```
+$ amplify update api
+? Please select from one of the below mentioned services GraphQL
+? Choose an authorization type for the API Amazon Cognito User Pool
+Use a Cognito user pool configured as a part of this project
+```
+
+then 
+
+`$ amplify push`
 
 In the project directory, you can run:
 
