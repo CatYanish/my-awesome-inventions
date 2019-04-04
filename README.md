@@ -3,14 +3,15 @@ This project was bootstrapped with Create React App.
 How to run locally
 Clone the repo, then npm install the dependencies
 
-$ npm install -g @aws-amplify/cli
+`$ npm install -g @aws-amplify/cli`
 
 or
 
-$ yarn global add @aws-amplify/cli
+`$ yarn global add @aws-amplify/cli`
 
 Then
 
+```
 $amplify init
 do you want to use an existing env? yes
 littlebits
@@ -39,9 +40,12 @@ Enter the access key of the newly created user:
 This would update/create the AWS Profile in your local machine
 ? Profile Name:  amplify-admin
 Successfully set up the new user.
+```
+
+
 Then
 
-`
+```
 $ amplify init
 Note: It is recommended to run this command from the root of your app directory
 ? do you want to use an existing env? No (create and name the env)
@@ -61,13 +65,20 @@ https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
 ? Do you want to use an AWS profile? Yes
 ? Please choose the profile you want to use amplify
 ⠦ Initializing project in the cloud...
+```
+
 then
 
+```
 $ amplify update api
 ? Please select from one of the below mentioned services GraphQL
 ? Choose an authorization type for the API Amazon Cognito User Pool
 Use a Cognito user pool configured as a part of this project
+```
+
+
 then
+
 
 $ amplify push
 
