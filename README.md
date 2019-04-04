@@ -33,7 +33,7 @@ Enter the access key of the newly created user:
 ? accessKeyId:  AKIAIIxxxx**********
 ? secretAccessKey:  rVP2wfXX+b50Dfmxxxxx********************
 This would update/create the AWS Profile in your local machine
-? Profile Name:  amplify
+? Profile Name:  amplify-admin
 Successfully set up the new user.
 ```
 
