@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Amplify, {API,graphqlOperation} from 'aws-amplify';
 import { withAuthenticator} from 'aws-amplify-react'; 
 import aws_exports from './aws-exports';
-import DropDown from './components/DropDown';
 import InventionForm from './components/InventionForm'
 Amplify.configure(aws_exports);
 
@@ -166,7 +164,7 @@ class App extends Component {
     this.setState({
       title: '',
       description: '',
-      bitsUsed: '',
+      bitsUsed: [],
       userName: '',
       email: '',
       otherMaterials:'',});
@@ -190,7 +188,15 @@ class App extends Component {
   };
     await API.graphql(graphqlOperation(updateInvention, { input: invention}));
     this.listInventions();
-    this.setState({displayAdd:true,displayUpdate:false,value:""});
+    this.setState({
+      title: '',
+      description: '',
+      bitsUsed: [],
+      userName: '',
+      email: '',
+      otherMaterials:'',
+      displayAdd:true,
+      displayUpdate:false,});
   }
   selectInvention(invention){
     this.setState({
@@ -213,17 +219,16 @@ class App extends Component {
   render() {
     const data = [].concat(this.state.inventions)
       .map((item,i)=> 
-      <div className="alert alert-primary alert-dismissible show" role="alert">
+      <div key={item.id + i} className="alert alert-primary alert-dismissible show invention-item" role="alert">
         <span key={item.id} onClick={this.selectInvention.bind(this, item)}>{item.title}</span>
-        <button key={item.name} type="button" className="close" data-dismiss="alert" onClick={this.handleDelete.bind(this, item.id)}>
-          <span aria-hidden="true">&times;</span>
+        <button key={item.id + item.title} type="button" className="close" data-dismiss="alert" onClick={this.handleDelete.bind(this, item.id)}>
+          <span key={item.title} aria-hidden="true">&times;</span>
         </button>
       </div>
       )
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Little Bits</h1>
         </header>
         <br/>
@@ -243,20 +248,19 @@ class App extends Component {
              />
           : null }
           {this.state.displayUpdate ?
-            <form onSubmit={this.handleUpdate}>
-                <input type="text" className="form-control form-control-lg" placeholder={this.state.title} value={this.state.title} onChange={this.addInventionName}/>
-                 <input type="text" className="form-control form-control-lg" placeholder="Description" value={this.state.description} onChange={this.addDescription}/>
-                <input type="text" className="form-control form-control-lg" placeholder="Bits Used" value={this.state.bitsUsed} onChange={this.addBitsUsed}/>
-                <input type="text" className="form-control form-control-lg" placeholder="Other Materials" value={this.state.otherMaterials} onChange={this.addOtherMaterials}/>
-                <input type="text" className="form-control form-control-lg" placeholder="User Name" value={this.state.userName} onChange={this.addUserName}/>
-                <input type="text" className="form-control form-control-lg" value={this.state.email} onChange={this.addEmail}/>
-              <div className="input-group mb-3">
-                <div className="input-group-append">
-                <DropDown bitsUsed={this.state.bitsUsed} checkBitList={this.checkBitList}/>
-                  <button className="btn btn-primary" type="submit">Update Invention</button>
-                </div>
-              </div>
-            </form>
+              <InventionForm 
+                handleSubmit={this.handleSubmit}
+                handleUpdate={this.handleUpdate}
+                isAdd={false}
+                title={this.state.title}
+                description={this.state.description}
+                bitsUsed={this.state.bitsUsed}
+                otherMaterials={this.state.otherMaterials}
+                userName={this.state.userName}
+                email={this.state.email}
+                addInfo={this.addInfo}
+                checkBitList={this.checkBitList}
+              />
           : null }
         </div>
         <br/>

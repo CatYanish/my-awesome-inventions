@@ -8,7 +8,7 @@ export default class DropDown extends Component {
       <div>
         <select className="bits" name="bits" multiple>
           {Object.values(BITS).map((bit, i) => 
-            <option className={bitsUsed && bitsUsed.includes(bit) ? "selected" : ""} value={bit} onClick={checkBitList}>{bit}</option>
+            <option key={bit} className={bitsUsed && bitsUsed.includes(bit) ? "selected" : ""} value={bit} onClick={checkBitList}>{bit}</option>
           ) 
           }
         </select>
