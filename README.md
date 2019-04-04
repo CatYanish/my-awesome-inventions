@@ -17,6 +17,16 @@ or
 Then 
 
 ```
+$amplify init
+do you want to use an existing env? yes
+littlebits
+
+do you want to use an AWS profile? 
+
+yes
+
+
+
 $ amplify configure
 Follow these steps to set up access to your AWS account:
 Sign in to your AWS administrator account:
