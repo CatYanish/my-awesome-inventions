@@ -4,7 +4,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Amplify, {API,graphqlOperation} from 'aws-amplify';
 import { withAuthenticator} from 'aws-amplify-react'; 
-import aws_exports from './aws-exports'; // specify the location of aws-exports.js file on your project
+import aws_exports from './aws-exports';
+import DropDown from './components/DropDown';
+import InventionForm from './components/InventionForm'
 Amplify.configure(aws_exports);
 
 export const createInvention = `mutation CreateInvention($input: CreateInventionInput!) {
@@ -90,7 +92,7 @@ class App extends Component {
       id:"",
       title: "",
       description: "",
-      bitsUsed: "",
+      bitsUsed: [],
       userName: "",
       email: "",
       otherMaterials: "",
@@ -105,27 +107,47 @@ class App extends Component {
 
   async componentDidMount(){
     const inventions = await API.graphql(graphqlOperation(listInventions));
-    console.log(inventions.data)
     this.setState({inventions:inventions.data.listInventions.items});
   }
 
-  addInventionName = (event) => {
-    this.setState({title:event.target.value});
+
+  addInfo = (event, type) => {
+    switch (event.target.id) {
+      case "title":
+        this.setState({title:event.target.value});
+        break;
+      case "description":
+        this.setState({description: event.target.value})
+        break;
+      case "user-name":
+        this.setState({userName: event.target.value})
+        break;
+      case "email":
+        this.setState({email: event.target.value})
+        break;
+      case "other-materials":
+       this.setState({otherMaterials: [event.target.value]})
+        break;
+      default:
+        break;
+    }
   }
-  addDescription = (event) => {
-    this.setState({description: event.target.value})
-  }
-  addBitsUsed = (event) => {
-    this.setState({bitsUsed: [event.target.value]})
-  }
-  addUserName = (event) => {
-    this.setState({userName: event.target.value})
-  }
-  addEmail = (event) => {
-    this.setState({email: event.target.value})
-  }
-  addOtherMaterials = (event) => {
-    this.setState({otherMaterials: [event.target.value]})
+
+
+  checkBitList = (event) => {
+    let filteredBitsList;
+    if (event.target.value !== undefined) {
+      if (this.state.bitsUsed.includes(event.target.value)) {
+       filteredBitsList = this.state.bitsUsed.filter(function(value, index, arr){
+          return value !== event.target.value;
+      });
+      this.setState({bitsUsed: filteredBitsList})
+      } else {
+        let newList = this.state.bitsUsed
+        newList.push(event.target.value)
+        this.setState({bitsUsed: newList})
+      }
+    }
   }
 
   async handleSubmit(event) {
@@ -171,8 +193,6 @@ class App extends Component {
     this.setState({displayAdd:true,displayUpdate:false,value:""});
   }
   selectInvention(invention){
-    console.log('We called this shit!');
-    
     this.setState({
       id:invention.id,
       title:invention.title,
@@ -183,14 +203,10 @@ class App extends Component {
       otherMaterials: invention.otherMaterials,
       displayAdd:false,
       displayUpdate:true,
-    });
-
-      console.log(this.state.displayUpdate);
-      
+    });      
   }
   async listInventions(){
     const inventions = await API.graphql(graphqlOperation(listInventions));
-    console.log({inventions})
     this.setState({inventions:inventions.data.listInventions.items});
   }
   
@@ -213,20 +229,18 @@ class App extends Component {
         <br/>
         <div className="container">
           {this.state.displayAdd ?
-            <form onSubmit={this.handleSubmit}>
-            <input type="text" className="form-control form-control-lg" placeholder="Invention Name" value={this.state.title} onChange={this.addInventionName}/>
-            <input type="text" className="form-control form-control-lg" placeholder="Description" value={this.state.description} onChange={this.addDescription}/>
-              <div className="input-group mb-3">
-              <input type="text" className="form-control form-control-lg" placeholder="Bits Used" value={this.state.bitsUsed} onChange={this.addBitsUsed}/>
-                <input type="text" className="form-control form-control-lg" placeholder="Other Materials" value={this.state.otherMaterials} onChange={this.addOtherMaterials}/>
-                <input type="text" className="form-control form-control-lg" placeholder="User Name" value={this.state.userName} onChange={this.addUserName}/>
-                <input type="text" className="form-control form-control-lg" value={this.state.email} onChange={this.addEmail}/>
-                <div className="input-group-append"></div>
-                
-                <button className="btn btn-primary" type="submit">Add Invention</button>
-              </div>
-
-            </form>
+            <InventionForm 
+              handleSubmit={this.handleSubmit}
+              isAdd={true}
+              title={this.state.title}
+              description={this.state.description}
+              bitsUsed={this.state.bitsUsed}
+              otherMaterials={this.state.otherMaterials}
+              userName={this.state.userName}
+              email={this.state.email}
+              addInfo={this.addInfo}
+              checkBitList={this.checkBitList}
+             />
           : null }
           {this.state.displayUpdate ?
             <form onSubmit={this.handleUpdate}>
@@ -238,6 +252,7 @@ class App extends Component {
                 <input type="text" className="form-control form-control-lg" value={this.state.email} onChange={this.addEmail}/>
               <div className="input-group mb-3">
                 <div className="input-group-append">
+                <DropDown bitsUsed={this.state.bitsUsed} checkBitList={this.checkBitList}/>
                   <button className="btn btn-primary" type="submit">Update Invention</button>
                 </div>
               </div>

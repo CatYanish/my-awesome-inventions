@@ -23,6 +23,17 @@
   color: #61dafb;
 }
 
+
+.bits {
+  width: 400px;
+  height: 500px;
+}
+
+
+.selected {
+  background-color:#417cd3;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
