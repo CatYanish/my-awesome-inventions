@@ -24,70 +24,9 @@ littlebits
 do you want to use an AWS profile? 
 
 yes
-
-
-
-$ amplify configure
-Follow these steps to set up access to your AWS account:
-Sign in to your AWS administrator account:
-https://console.aws.amazon.com/
-Press Enter to continue
-Specify the AWS Region
-? region:  <your region of choice here>
-Specify the username of the new IAM user:
-? user name:  amplify-admin
-Complete the user creation using the AWS console
-https://console.aws.amazon.com/iam/home?region=undefined#/users$new?step=final&accessKey&userNames=amplify-admin&permissionType=policies&policies=arn:aws:iam::aws:policy%2FAdministratorAccess
-Press Enter to continue
-Enter the access key of the newly created user:
-? accessKeyId:  AKIAIIxxxx**********
-? secretAccessKey:  rVP2wfXX+b50Dfmxxxxx********************
-This would update/create the AWS Profile in your local machine
-? Profile Name:  amplify-admin
-Successfully set up the new user.
 ```
 
-
-Then
-
-```
-`
-$ amplify init
-Note: It is recommended to run this command from the root of your app directory
-? do you want to use an existing env? No (create and name the env)
-? do you want to use an AWS Profile? Yes
-? Choose profile you want to use: amplify-admin (Choose the profile that matches the one you just created) 
-? Choose your default editor: Visual Studio Code
-? Choose the type of app that you're building javascript
-Please tell us about your project
-? What javascript framework are you using react
-? Source Directory Path:  src
-? Distribution Directory Path: build
-? Build Command:  npm run-script build
-? Start Command: npm run-script start
-Using default provider awscloudformation
-For more information on AWS Profiles, see:
-https://docs.aws.amazon.com/cli/latest/userguide/cli-multiple-profiles.html
-? Do you want to use an AWS profile? Yes
-? Please choose the profile you want to use amplify
-⠦ Initializing project in the cloud...
-```
-
-
-
-then 
-
-
-```
-$ amplify update api
-? Please select from one of the below mentioned services GraphQL
-? Choose an authorization type for the API Amazon Cognito User Pool
-Use a Cognito user pool configured as a part of this project
-```
-
-then 
-
-`$ amplify push`
+Select profile called `cat`
 
 In the project directory, you can run:
 
